@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Flipcard from '@/components/Flipcard';
+import Link from "next/link";
 
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(0);
@@ -81,6 +82,10 @@ export default function Home() {
           Next
         </button>
       </div>
+      <Link href='/admin'>
+        <button className="px-4 py-2 mt-3 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl text-white hover:bg-opacity-30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        >Go to admin Page</button>
+        </Link>
     </div>
   );
 }
