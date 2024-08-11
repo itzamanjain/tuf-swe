@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react";
+import { FaPen, FaTrash, FaCheck } from "react-icons/fa"; // Import icons
 
 export default function AdminFlipCard({ id, question, answer }) {
   const [flipped, setFlipped] = useState(false);
@@ -52,7 +53,7 @@ export default function AdminFlipCard({ id, question, answer }) {
   };
 
   return (
-    <div className="h-[400px] flex flex-col items-center justify-center space-y-4">
+    <div className="h-[400px] flex flex-col items-center justify-center">
       <div
         className="relative w-80 h-48 [perspective:1000px] group"
         onClick={() => !isEditing && setFlipped(!flipped)}
@@ -64,65 +65,94 @@ export default function AdminFlipCard({ id, question, answer }) {
         >
           {/* Front Side */}
           <div
-            className="absolute inset-0 flex items-center justify-center p-6 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white border-opacity-18 text-white [backface-visibility:hidden]"
+            className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white border-opacity-18 text-white [backface-visibility:hidden]"
           >
-            <p className="text-2xl font-semibold">
+            <p className="text-2xl font-semibold mb-4">
               {isEditing ? (
                 <input
                   type="text"
                   value={editedQuestion}
                   onChange={(e) => setEditedQuestion(e.target.value)}
-                  className="w-full text-black"
+                  className="w-full text-black p-1 rounded"
                 />
               ) : (
                 question
               )}
             </p>
+            {/* Admin Icons */}
+            <div className="absolute bottom-2 right-2 flex space-x-2">
+              {isEditing ? (
+                <FaCheck
+                  onClick={handleEdit}
+                  className="text-green-500 cursor-pointer"
+                  size={23}
+                />
+              ) : (
+                <FaPen
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsEditing(true);
+                  }}
+                  className="text-green-500 mr-2 cursor-pointer"
+                  size={23}
+                />
+              )}
+              <FaTrash
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete();
+                }}
+                className="text-red-600  ml-2 cursor-pointer"
+                size={23}
+              />
+            </div>
           </div>
 
           {/* Back Side */}
           <div
-            className="absolute inset-0 flex items-center justify-center p-6 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white border-opacity-18 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]"
+            className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] border border-white border-opacity-18 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]"
           >
-            <p className="text-3xl font-bold">
+            <p className="text-3xl font-bold mb-4">
               {isEditing ? (
                 <input
                   type="text"
                   value={editedAnswer}
                   onChange={(e) => setEditedAnswer(e.target.value)}
-                  className="w-full text-black"
+                  className="w-full text-black p-1 rounded"
                 />
               ) : (
                 answer
               )}
             </p>
+            {/* Admin Icons */}
+            <div className="absolute bottom-2 right-2 flex space-x-2">
+              {isEditing ? (
+                <FaCheck
+                  onClick={handleEdit}
+                  className="text-green-500 cursor-pointer"
+                  size={20}
+                />
+              ) : (
+                <FaPen
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsEditing(true);
+                  }}
+                  className="text-blue-500 cursor-pointer"
+                  size={20}
+                />
+              )}
+              <FaTrash
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete();
+                }}
+                className="text-red-500 cursor-pointer"
+                size={20}
+              />
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Admin Buttons */}
-      <div className="flex space-x-4">
-        {isEditing ? (
-          <button
-            onClick={handleEdit}
-            className="px-4 py-2 bg-green-500 text-white rounded"
-          >
-            Save
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Edit
-          </button>
-        )}
-        <button
-          onClick={handleDelete}
-          className="px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Delete
-        </button>
       </div>
     </div>
   );
