@@ -6,6 +6,7 @@ import Flipcard from '@/components/Flipcard';
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(0);
   const [cards, setCards] = useState([]); // Initialize the state for flashcards
+  const [loading, setLoading] = useState(true); // State to track loading status
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -17,6 +18,8 @@ export default function Home() {
         setCards(data.flashcards); // Update state with fetched data
       } catch (error) {
         console.error("Error fetching flashcards:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching is complete
       }
     };
 
@@ -40,8 +43,16 @@ export default function Home() {
     }
   }, [currentCard]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-500 to-red-500 flex items-center justify-center p-4">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-500 to-red-500 flex flex-col items-center justify-center p-4">
       <div 
         ref={containerRef}
         className="w-full max-w-screen-lg overflow-x-hidden"
