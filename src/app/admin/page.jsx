@@ -61,7 +61,7 @@ export default function AddFlashcard() {
   };
 
   return (
-    <div className="min-h-screen text-black bg-gradient-to-br from-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen text-black bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center p-4">
       <Head>
         <title>Add New Flashcard</title>
         <meta name="description" content="Add a new flashcard to your collection" />
